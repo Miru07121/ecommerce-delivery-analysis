@@ -1,0 +1,10 @@
+{
+  "total_orders": 99441,
+  "eligible_orders": 96470,
+  "late_orders": 6534,
+  "late_rate_pct": 6.7730900798175595,
+  "median_delivery_days": 10.0,
+  "median_late_delay_days": 7.0,
+  "purchase_start": "2016-09-04 21:15:19",
+  "purchase_end": "2018-10-17 17:30:18"
+}

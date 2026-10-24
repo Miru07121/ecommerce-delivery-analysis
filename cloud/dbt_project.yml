@@ -1,0 +1,10 @@
+name: ecommerce_delivery_cloud
+version: '1.0.0'
+config-version: 2
+profile: ecommerce_delivery_cloud
+model-paths: ["models"]
+models:
+  ecommerce_delivery_cloud:
+    +materialized: view
+    marts:
+      +materialized: table

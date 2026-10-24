@@ -1,0 +1,19 @@
+version: 2
+models:
+  - name: fct_delivery_orders
+    description: "One row per Olist order; delivery flags are meaningful only where delivery_eligible=1."
+    columns:
+      - name: order_id
+        tests:
+          - not_null
+          - unique
+      - name: delivery_eligible
+        tests:
+          - accepted_values:
+              values: [0, 1]
+              quote: false
+      - name: late
+        tests:
+          - accepted_values:
+              values: [0, 1]
+              quote: false

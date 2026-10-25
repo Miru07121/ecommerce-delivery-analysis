@@ -10,10 +10,12 @@ models:
       - name: delivery_eligible
         tests:
           - accepted_values:
-              values: [0, 1]
-              quote: false
+              arguments:
+                values: [0, 1]
+                quote: false
       - name: late
         tests:
           - accepted_values:
-              values: [0, 1]
-              quote: false
+              arguments:
+                values: [0, 1]
+                quote: false

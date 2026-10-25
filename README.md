@@ -75,3 +75,10 @@ The dashboard runs locally in Streamlit. It is not a Power BI file or an externa
 Historical 2016–2018 Brazilian orders are not current Canadian benchmarks. Canceled, undelivered and invalid-date records are excluded from delivery-rate denominators, so this is not the failure rate for all purchases. Recent purchase cohorts may have incomplete delivery outcomes; sparse early months should not be interpreted as stable trends. Reviews are selected observations, not a random customer survey. The estimates are descriptive; 95% Wilson intervals assume independent Bernoulli outcomes and do not account for seller/customer clustering or selection bias. Seller rankings use single-seller orders and still cannot identify carrier versus seller responsibility. No profit, savings, conversion lift or causal impact is claimed.
 
 Data and derived outputs are attributed to Olist and distributed under CC BY-NC-SA 4.0; see [DATA_SOURCES.md](DATA_SOURCES.md).
+
+## BigQuery Sandbox extension
+
+See [the cloud setup guide](cloud/README.md) for explicit source schemas, dbt models,
+Console SQL and quality checks for `secret-drake-512620-i7`.
+[Validation evidence](cloud/VALIDATION.md) separates the reproduced local results
+from cloud deployment, which remains unverified.

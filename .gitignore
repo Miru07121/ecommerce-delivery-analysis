@@ -4,3 +4,9 @@ __pycache__/
 data/raw/*.csv
 results/*.sqlite*
 results/order_mart.csv
+
+# Local cloud credentials and generated dbt artifacts
+cloud/profiles.yml
+cloud/target/
+cloud/logs/
+.venv-dbt/

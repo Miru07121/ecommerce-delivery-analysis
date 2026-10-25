@@ -19,14 +19,14 @@ WITH item_rollup AS (
  ) WHERE rn=1
 ), base AS (
  SELECT o.order_id, o.order_status, o.order_purchase_timestamp AS purchased_at,
- SUBSTR(o.order_purchase_timestamp,1,7) AS purchase_month,
+ FORMAT_DATE('%Y-%m', SAFE_CAST(o.order_purchase_timestamp AS DATE)) AS purchase_month,
  o.order_delivered_customer_date AS delivered_at, o.order_estimated_delivery_date AS promised_at,
  c.customer_state,i.item_count,i.seller_count,i.seller_id,s.seller_state,i.category,i.item_value_brl,i.freight_brl,
  SAFE_CAST(r.review_score AS INT64) AS review_score,r.review_creation_date,r.review_answer_timestamp,
- SAFE_CAST(SUBSTR(o.order_purchase_timestamp,1,10) AS DATE) purchase_date,
- SAFE_CAST(SUBSTR(o.order_delivered_customer_date,1,10) AS DATE) delivery_date,
- SAFE_CAST(SUBSTR(o.order_estimated_delivery_date,1,10) AS DATE) promise_date,
- SAFE_CAST(SUBSTR(r.review_creation_date,1,10) AS DATE) review_date
+ SAFE_CAST(o.order_purchase_timestamp AS DATE) purchase_date,
+ SAFE_CAST(o.order_delivered_customer_date AS DATE) delivery_date,
+ SAFE_CAST(o.order_estimated_delivery_date AS DATE) promise_date,
+ SAFE_CAST(r.review_creation_date AS DATE) review_date
  FROM {{ source('olist_raw','orders') }} o
  LEFT JOIN {{ source('olist_raw','customers') }} c USING(customer_id)
  LEFT JOIN item_rollup i USING(order_id)

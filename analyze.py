@@ -1,16 +1,22 @@
 """Build a validated SQLite order mart and reproducible portfolio outputs."""
 from pathlib import Path
 import hashlib,json,sqlite3,math
+from numbers import Integral
 import pandas as pd
 ROOT=Path(__file__).resolve().parent
 TABLES={'orders':'olist_orders_dataset.csv','items':'olist_order_items_dataset.csv','reviews':'olist_order_reviews_dataset.csv','customers':'olist_customers_dataset.csv','products':'olist_products_dataset.csv','sellers':'olist_sellers_dataset.csv','translations':'product_category_name_translation.csv'}
 KEYS={'orders':['order_id'],'items':['order_id','order_item_id'],'customers':['customer_id'],'products':['product_id'],'sellers':['seller_id'],'translations':['product_category_name']}
 
 def wilson(k,n):
+ """95% Wilson interval for integer counts; no observations has no interval."""
+ if any(isinstance(value,bool) or not isinstance(value,Integral) for value in (k,n)):
+  raise ValueError('Wilson counts must be integers')
+ if n<0 or k<0 or k>n:
+  raise ValueError('Wilson counts must satisfy 0 <= k <= n')
  if not n:return (None,None)
  z=1.959963984540054;p=k/n;den=1+z*z/n
  center=(p+z*z/(2*n))/den;half=z*math.sqrt(p*(1-p)/n+z*z/(4*n*n))/den
- return center-half,center+half
+ return (0.0 if k==0 else max(0.0,center-half),1.0 if k==n else min(1.0,center+half))
 
 def main():
  out=ROOT/'results';out.mkdir(exist_ok=True)
@@ -66,3 +72,4 @@ def main():
  print(json.dumps(summary,indent=2));print(comparison.to_string(index=False));print(segments.groupby('dimension').head(3).to_string(index=False))
  return summary
 if __name__=='__main__':main()
+

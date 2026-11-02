@@ -75,3 +75,20 @@ The dashboard runs locally in Streamlit. It is not a Power BI file or an externa
 Historical 2016–2018 Brazilian orders are not current Canadian benchmarks. Canceled, undelivered and invalid-date records are excluded from delivery-rate denominators, so this is not the failure rate for all purchases. Recent purchase cohorts may have incomplete delivery outcomes; sparse early months should not be interpreted as stable trends. Reviews are selected observations, not a random customer survey. The estimates are descriptive; 95% Wilson intervals assume independent Bernoulli outcomes and do not account for seller/customer clustering or selection bias. Seller rankings use single-seller orders and still cannot identify carrier versus seller responsibility. No profit, savings, conversion lift or causal impact is claimed.
 
 Data and derived outputs are attributed to Olist and distributed under CC BY-NC-SA 4.0; see [DATA_SOURCES.md](DATA_SOURCES.md).
+
+## Offline regression checks
+
+`python -m unittest discover -s tests -v` requires no Olist download or cloud
+credentials. GitHub Actions runs the same suite on pushes and pull requests.
+Synthetic fixtures check SQL join safety and delivery-date boundaries; Wilson
+interval tests cover reference values, complementary counts, all/zero successes,
+empty samples, and invalid counts.
+
+`wilson(k, n)` accepts integer counts satisfying `0 <= k <= n`. It returns
+`(None, None)` for an empty sample and exact probability-boundary endpoints for
+zero or all successes. Fractional counts, booleans and invalid denominators raise
+`ValueError`. The interval is expressed on a 0–1 scale; reports convert it to
+percentages. These tests do not run dbt or validate a live BigQuery deployment,
+and the complete local pipeline still requires the seven source CSVs.
+
+
